@@ -1,0 +1,20 @@
+services:
+  budget-tracker:
+    build:
+      context: ../..              # الرجوع للمجلد الرئيسي (D:\Yew\budget-tracker)
+      dockerfile: Dockerfile      # الـ Dockerfile في الجذر
+    volumes:
+      - type: bind
+        source: ../..           # المجلد الرئيسي
+        target: /app            # المجلد داخل الـ container
+      - cargo-registry-cache:/usr/local/cargo/registry # كاش Cargo
+      - target-cache:/app/target # كاش البناء
+    command: bash -c "cd /app && trunk serve --address 0.0.0.0 --port 8082"
+    ports:
+      - "8082:8082"             # ربط بورت 8082
+    environment:
+      - TRUNK_SERVE_PORT=8082   # متغير بيئة للبورت
+
+volumes:
+  cargo-registry-cache:         # تعريف volume لكاش Cargo
+  target-cache:                 # تعريف volume لكاش target

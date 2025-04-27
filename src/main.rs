@@ -1,3 +1,5 @@
+use budget_tracker::App;
+
 fn main() {
-    println!("Hello, world!");
+    yew::Renderer::<App>::new().render();
 }
